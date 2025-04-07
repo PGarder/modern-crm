@@ -19,6 +19,19 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
+// @route   GET api/contacts/:id
+// @desc    Get one contact
+// @access  Private
+router.get('/:id', auth, async (req, res) => {
+    try {
+        const contact = await Contact.findById(req.params.id);
+        if (!contact) return res.status(404).json({ message: 'Contact not found' });
+        res.json(contact);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 // @route   POST api/contacts
 // @desc    Create a contact
 // @access  Private
@@ -42,7 +55,7 @@ router.post('/', [
         });
 
         const contact = await newContact.save();
-        res.json(contact);
+        res.status(201).json(contact);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

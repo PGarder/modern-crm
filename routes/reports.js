@@ -3,6 +3,7 @@ const router = express.Router();
 const Lead = require('../models/Lead');
 const Contact = require('../models/Contact');
 const auth = require('../middleware/auth');
+const Task = require('../models/Task');
 
 // @route   GET api/reports/kpi
 // @desc    Get KPI report
@@ -358,6 +359,57 @@ router.get('/sales-cycle', auth, async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
+    }
+});
+
+// Get lead conversion report
+router.get('/leads', async (req, res) => {
+    try {
+        const leads = await Lead.aggregate([
+            {
+                $group: {
+                    _id: '$status',
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+        res.json(leads);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// Get contact distribution report
+router.get('/contacts', async (req, res) => {
+    try {
+        const contacts = await Contact.aggregate([
+            {
+                $group: {
+                    _id: '$company',
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+        res.json(contacts);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// Get task completion report
+router.get('/tasks', async (req, res) => {
+    try {
+        const tasks = await Task.aggregate([
+            {
+                $group: {
+                    _id: '$status',
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+        res.json(tasks);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
 

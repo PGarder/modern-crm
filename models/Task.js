@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const TaskSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -8,61 +8,23 @@ const TaskSchema = new mongoose.Schema({
     description: {
         type: String
     },
-    type: {
+    dueDate: {
+        type: Date
+    },
+    priority: {
         type: String,
-        enum: ['call', 'email', 'meeting', 'follow-up', 'other'],
-        default: 'other'
+        enum: ['low', 'medium', 'high'],
+        default: 'medium'
     },
     status: {
         type: String,
         enum: ['pending', 'in-progress', 'completed', 'cancelled'],
         default: 'pending'
     },
-    priority: {
-        type: String,
-        enum: ['low', 'medium', 'high', 'urgent'],
-        default: 'medium'
-    },
-    dueDate: {
-        type: Date
-    },
     assignedTo: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        ref: 'User'
     },
-    relatedTo: {
-        type: {
-            type: String,
-            enum: ['contact', 'lead', 'none'],
-            default: 'none'
-        },
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-            refPath: 'relatedTo.type'
-        }
-    },
-    reminder: {
-        enabled: {
-            type: Boolean,
-            default: false
-        },
-        time: {
-            type: Date
-        }
-    },
-    notes: [{
-        content: String,
-        createdBy: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now
-        }
-    }],
-    tags: [String],
     createdAt: {
         type: Date,
         default: Date.now
@@ -74,9 +36,9 @@ const TaskSchema = new mongoose.Schema({
 });
 
 // Update the updatedAt field before saving
-TaskSchema.pre('save', function(next) {
+taskSchema.pre('save', function(next) {
     this.updatedAt = Date.now();
     next();
 });
 
-module.exports = mongoose.model('Task', TaskSchema); 
+module.exports = mongoose.model('Task', taskSchema); 

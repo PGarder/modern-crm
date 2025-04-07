@@ -178,4 +178,9 @@ async function syncSystem(integration) {
     }
 }
 
+// Placeholder for integration routes
+router.get('/', (req, res) => {
+    res.json({ message: 'Integration routes will be implemented here' });
+});
+
 module.exports = router; 
