@@ -1,0 +1,15 @@
+{
+    "name": "Modern CRM Development",
+    "dockerFile": "Dockerfile",
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "mongodb.mongodb-vscode"
+    ],
+    "forwardPorts": [5000],
+    "postCreateCommand": "npm install",
+    "remoteUser": "node"
+} 
