@@ -1,15 +1,17 @@
 {
-    "name": "Modern CRM Development",
-    "dockerFile": "Dockerfile",
-    "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
+    "name": "Node.js & MongoDB",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+    "features": {
+        "ghcr.io/devcontainers/features/mongodb:1": {}
     },
-    "extensions": [
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "mongodb.mongodb-vscode"
-    ],
-    "forwardPorts": [5000],
-    "postCreateCommand": "npm install",
-    "remoteUser": "node"
-} 
+    "forwardPorts": [3000, 5000],
+    "postCreateCommand": "npm install && cd client && npm install && cd ..",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode"
+            ]
+        }
+    }
+}
