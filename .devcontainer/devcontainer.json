@@ -1,9 +1,6 @@
 {
-    "name": "Node.js & MongoDB",
+    "name": "Node.js",
     "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
-    "features": {
-        "ghcr.io/devcontainers/features/mongodb:1": {}
-    },
     "forwardPorts": [3000, 5000],
     "postCreateCommand": "npm install && cd client && npm install && cd ..",
     "customizations": {
